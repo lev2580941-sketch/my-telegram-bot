@@ -5,9 +5,17 @@ from aiogram.types import FSInputFile
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 import aiohttp
 from posts import POSTS
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return 'Bot is running!'
 
 # ===== ТВОИ ДАННЫЕ =====
-BOT_TOKEN = "760752864:AAEkawGTRxWfMF8rSOq1E5t8Wyy8kF3DYlE"
+BOT_TOKEN = "8760752864:AAEkawGTRxWfMF8rSOq1E5t8Wyy8kF3DYlE"
+...
 CHANNEL_ID = "@prestige_social_work"
 
 STATE_FILE = "state.txt"
@@ -103,5 +111,13 @@ class SmartBot:
             await asyncio.sleep(3600)
 
 if __name__ == "__main__":
+    import threading
+    
     bot = SmartBot()
-    asyncio.run(bot.run())
+    
+    # Запускаем бота в отдельном потоке
+    bot_thread = threading.Thread(target=lambda: asyncio.run(bot.run()))
+    bot_thread.start()
+    
+    # Запускаем Flask (держит порт открытым)
+    app.run(host='0.0.0.0', port=8080)
