@@ -9,7 +9,7 @@ from flask import Flask
 from posts import POSTS
 
 # ===== ТВОИ ДАННЫЕ =====
-BOT_TOKEN = "8760752864:AAEkawGTRxWfMF8rSOq1E5t8Wyy8kF3DYlE"
+BOT_TOKEN = "8760752864:AAF9tC0hDIe3KQU7nuaLvZfb5-JXKYzMXPE"
 CHANNEL_ID = "@prestige_social_work"
 STATE_FILE = "state.txt"
 
