@@ -120,4 +120,4 @@ if __name__ == "__main__":
     bot_thread.start()
     
     # Запускаем Flask (держит порт открытым)
-    app.run(host='0.0.0.0', port=8080)
+    app.run(host='0.0.0.0', port=10000)
