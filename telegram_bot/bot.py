@@ -105,7 +105,7 @@ class SmartBot:
         self.scheduler.start()
         print("⏰ Планировщик запущен. Посты в 10:00.")
         
-     async def run(self):
+    async def run(self):
         print("🤖 Умный бот запущен!")
         print(f"📊 Уже опубликовано: {self.load_state()}/{len(POSTS)}")
         
