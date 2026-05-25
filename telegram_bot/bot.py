@@ -23,12 +23,14 @@ STATE_FILE = "state.txt"
 class SmartBot:
     def __init__(self):
         self.bot = Bot(token=BOT_TOKEN)
-        self.scheduler = AsyncIOScheduler()  # ← один раз
+        self.scheduler = AsyncIOScheduler()
         
         from aiogram import Dispatcher, types
+        from aiogram.filters import Command
+        
         self.dp = Dispatcher()
         
-        @self.dp.message(commands=['start'])
+        @self.dp.message(Command("start"))
         async def cmd_start(message: types.Message):
             await message.answer("Привет! Я бот для автопостинга. Посты публикуются по расписанию!")
         
