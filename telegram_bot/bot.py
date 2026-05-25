@@ -23,7 +23,14 @@ STATE_FILE = "state.txt"
 class SmartBot:
     def __init__(self):
         self.bot = Bot(token=BOT_TOKEN)
-        self.scheduler = AsyncIOScheduler()
+        self.scheduler = AsyncIOScheduler()  # ← один раз
+        
+        from aiogram import Dispatcher, types
+        self.dp = Dispatcher()
+        
+        @self.dp.message(commands=['start'])
+        async def cmd_start(message: types.Message):
+            await message.answer("Привет! Я бот для автопостинга. Посты публикуются по расписанию!")
         
     def load_state(self):
         """Читаем, сколько постов уже опубликовано"""
@@ -98,7 +105,7 @@ class SmartBot:
         self.scheduler.start()
         print("⏰ Планировщик запущен. Посты в 10:00.")
         
-    async def run(self):
+     async def run(self):
         print("🤖 Умный бот запущен!")
         print(f"📊 Уже опубликовано: {self.load_state()}/{len(POSTS)}")
         
@@ -106,6 +113,9 @@ class SmartBot:
         # Если уже публиковали — ждём 10:00
         
         self.start_schedule()
+        
+        # Запускаем обработчик сообщений в фоне (для команды /start)
+        asyncio.create_task(self.dp.start_polling(self.bot))
         
         while True:
             await asyncio.sleep(3600)
