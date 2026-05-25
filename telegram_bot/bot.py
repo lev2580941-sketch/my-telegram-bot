@@ -110,8 +110,13 @@ class SmartBot:
 if __name__ == "__main__":
     bot = SmartBot()
     
-    # Запускаем бота в фоновой задаче asyncio
-    asyncio.create_task(bot.run())
+    async def main():
+        # Запускаем Flask в фоновом потоке
+        from threading import Thread
+        flask_thread = Thread(target=lambda: app.run(host='0.0.0.0', port=10000))
+        flask_thread.start()
+        
+        # Запускаем бота
+        await bot.run()
     
-    # Запускаем Flask (держит порт открытым)
-    app.run(host='0.0.0.0', port=10000)
+    asyncio.run(main())
