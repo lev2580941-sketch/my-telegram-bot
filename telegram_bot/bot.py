@@ -121,13 +121,10 @@ class SmartBot:
             await asyncio.sleep(3600)
 
 if __name__ == "__main__":
-    import threading
-    
     bot = SmartBot()
     
-    # Запускаем бота в отдельном потоке
-    bot_thread = threading.Thread(target=lambda: asyncio.run(bot.run()))
-    bot_thread.start()
+    # Запускаем бота в фоновой задаче asyncio
+    asyncio.create_task(bot.run())
     
     # Запускаем Flask (держит порт открытым)
     app.run(host='0.0.0.0', port=10000)
